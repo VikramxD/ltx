@@ -5,8 +5,6 @@ import math
 import re
 import urllib.parse as ul
 from typing import Callable, Dict, List, Optional, Tuple, Union
-
-
 import torch
 import torch.nn.functional as F
 from contextlib import nullcontext
@@ -25,18 +23,18 @@ from diffusers.utils.torch_utils import randn_tensor
 from einops import rearrange
 from transformers import T5EncoderModel, T5Tokenizer
 
-from ltx_video.models.transformers.transformer3d import Transformer3DModel
-from ltx_video.models.transformers.symmetric_patchifier import Patchifier
-from ltx_video.models.autoencoders.vae_encode import (
+from ltx.ltx_video.models.transformers.transformer3d import Transformer3DModel
+from ltx.ltx_video.models.transformers.symmetric_patchifier import Patchifier
+from ltx.ltx_video.models.autoencoders.vae_encode import (
     get_vae_size_scale_factor,
     vae_decode,
     vae_encode,
 )
-from ltx_video.models.autoencoders.causal_video_autoencoder import (
+from ltx.ltx_video.models.autoencoders.causal_video_autoencoder import (
     CausalVideoAutoencoder,
 )
-from ltx_video.schedulers.rf import TimestepShifter
-from ltx_video.utils.conditioning_method import ConditioningMethod
+from ltx.ltx_video.schedulers.rf import TimestepShifter
+from ltx.ltx_video.utils.conditioning_method import ConditioningMethod
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
@@ -413,7 +411,7 @@ class LTXVideoPipeline(DiffusionPipeline):
     # Copied from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion.StableDiffusionPipeline.prepare_extra_step_kwargs
     def prepare_extra_step_kwargs(self, generator, eta):
         # prepare extra kwargs for the scheduler step, since not all schedulers have the same signature
-        # eta (η) is only used with the DDIMScheduler, it will be ignored for other schedulers.
+        # eta (η) is only used with the DDIMScheduler, it will be ignored for others.
         # eta corresponds to η in DDIM paper: https://arxiv.org/abs/2010.02502
         # and should be between [0, 1]
 
@@ -936,6 +934,7 @@ class LTXVideoPipeline(DiffusionPipeline):
         retrieve_timesteps_kwargs = {}
         if isinstance(self.scheduler, TimestepShifter):
             retrieve_timesteps_kwargs["samples"] = latents
+        
         timesteps, num_inference_steps = retrieve_timesteps(
             self.scheduler,
             num_inference_steps,

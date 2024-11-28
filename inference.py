@@ -5,7 +5,6 @@ import random
 from datetime import datetime
 from pathlib import Path
 from diffusers.utils import logging
-
 import imageio
 import numpy as np
 import safetensors.torch
@@ -14,14 +13,14 @@ import torch.nn.functional as F
 from PIL import Image
 from transformers import T5EncoderModel, T5Tokenizer
 
-from ltx_video.models.autoencoders.causal_video_autoencoder import (
+from ltx.ltx_video.models.autoencoders.causal_video_autoencoder import (
     CausalVideoAutoencoder,
 )
-from ltx_video.models.transformers.symmetric_patchifier import SymmetricPatchifier
-from ltx_video.models.transformers.transformer3d import Transformer3DModel
-from ltx_video.pipelines.pipeline_ltx_video import LTXVideoPipeline
-from ltx_video.schedulers.rf import RectifiedFlowScheduler
-from ltx_video.utils.conditioning_method import ConditioningMethod
+from ltx.ltx_video.models.transformers.symmetric_patchifier import SymmetricPatchifier
+from ltx.ltx_video.models.transformers.transformer3d import Transformer3DModel
+from ltx.ltx_video.pipelines.pipeline_ltx_video import LTXVideoPipeline
+from ltx.ltx_video.schedulers.rf import RectifiedFlowScheduler
+from ltx.ltx_video.utils.conditioning_method import ConditioningMethod
 
 
 MAX_HEIGHT = 720
